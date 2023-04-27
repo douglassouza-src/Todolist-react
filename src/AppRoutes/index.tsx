@@ -8,10 +8,10 @@ function AppRoutes() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path='/' element={<Login />}/>
-                <Route path='/signup' element={<Signup />}/>
+                <Route path='/' element={<Login />} />
+                <Route path='/signup' element={<Signup />} />
                 <Route path='/home' element={<Home />} />
-                <Route path='*' element={<h1>404 Not found</h1>}/>
+                <Route path='*' element={<h1>404 Not found</h1>} />
             </Routes>
         </BrowserRouter>
     )

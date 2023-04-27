@@ -3,11 +3,11 @@ import { InputDefault, InputName } from '../InputDefault';
 import { Stack, Button, Box, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { saveNewUser,  buscarUsuarios, getUsers } from '../../store/modules/users/userSlice';
+import { saveNewUser, buscarUsuarios, getUsers } from '../../store/modules/users/userSlice';
 import { getUserById } from '../../store/modules/userLogged/userLoggedSlice';
 
 export interface FormProps {
-  mode: 'login' | 'signup';
+    mode: 'login' | 'signup';
 };
 
 function Form({ mode }: FormProps) {
@@ -18,98 +18,98 @@ function Form({ mode }: FormProps) {
     const [errorName, setErrorName] = useState(false);
     const [errorEmail, setErrorEmail] = useState(false);
     const [errorPassword, setErrorPassword] = useState(false);
-    const usersRedux = useAppSelector(buscarUsuarios); 
-   
+    const usersRedux = useAppSelector(buscarUsuarios);
+
     const dispatch = useAppDispatch();
     const dataUsers = useAppSelector((buscarUsuarios))
-    
+
     const navigate = useNavigate();
 
-    const handleNavigate = () => { if(mode === 'login') { navigate('/signup') } else { navigate('/') } };
+    const handleNavigate = () => { if (mode === 'login') { navigate('/signup') } else { navigate('/') } };
 
-    const setId = (id:string) => { localStorage.setItem('userLoggedId', JSON.stringify(id)) };
+    const setId = (id: string) => { localStorage.setItem('userLoggedId', JSON.stringify(id)) };
 
     useEffect(() => {
         dispatch(getUsers())
         setId('')
         console.log(dataUsers);
-        
-      }, [dispatch, dataUsers])
+
+    }, [dispatch, dataUsers])
 
 
     const handleValidateInput = (value: string, key: InputName) => {
-        switch(key) {
+        switch (key) {
             case 'name':
-                if(value.length < 3) {
+                if (value.length < 3) {
                     setErrorName(true);
                 } else {
                     setErrorName(false);
                 }
-            break;
+                break;
 
             case 'email':
                 // eslint-disable-next-line no-useless-escape
                 const regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
-                if(!value.match(regexEmail)) {
+                if (!value.match(regexEmail)) {
                     setErrorEmail(true)
-                }else {
+                } else {
                     setErrorEmail(false)
                 }
-            break;
+                break;
 
             case 'password':
-                if(mode === 'signup') {
-                    if(!value || value.length < 6) {
+                if (mode === 'signup') {
+                    if (!value || value.length < 6) {
                         setErrorPassword(true)
-                        
+
                     } else {
                         setErrorPassword(false)
                     }
                 }
 
-                if(mode === 'login') {
-                    if(!value){
+                if (mode === 'login') {
+                    if (!value) {
                         setErrorPassword(true)
                     } else {
                         setErrorPassword(false)
                     }
                 }
-            break;
+                break;
 
             case 'repassword':
-                if(value !== password) {
+                if (value !== password) {
                     setErrorPassword(true)
                 } else {
                     setErrorPassword(false)
                 }
-            break
+                break
 
             default:
         }
     };
 
     const mudarInput = (value: string, key: InputName) => {
-        switch(key) {
+        switch (key) {
             case 'name':
                 setName(value)
                 handleValidateInput(value, key)
-            break;
+                break;
 
             case 'email':
                 setEmail(value)
                 handleValidateInput(value, key)
-            break;
+                break;
 
             case 'password':
                 setPassword(value)
                 handleValidateInput(value, key)
-            break;
+                break;
 
             case 'repassword':
                 setRepassword(value)
                 handleValidateInput(value, key)
-            break
+                break
 
             default:
         }
@@ -125,7 +125,7 @@ function Form({ mode }: FormProps) {
 
         const userExist = usersRedux.some((user) => user.email === newUser.email);
 
-        if(!userExist) {
+        if (!userExist) {
             dispatch(saveNewUser(newUser))
             clearInputs();
             alert("Usuário Cadastrado! Você será redirecionado");
@@ -133,9 +133,9 @@ function Form({ mode }: FormProps) {
             setTimeout(() => {
                 navigate('/')
             }, 1500)
-        } else {           
-            alert('E-mail já em uso!');
-            
+        } else {
+            alert('Esse E-mail já está em uso. Tente outro!');
+
 
         }
 
@@ -146,19 +146,20 @@ function Form({ mode }: FormProps) {
 
         const passwordMatch = usersRedux.find((user) => user.password === password);
 
-        if(!userExist) { const confirma = window.confirm("Usuário não cadastrado. Deseja cadastrar uma conta? ");
-            if(confirma) { navigate('/signup')}
-         };      
+        if (!userExist) {
+            const confirma = window.confirm("Usuário não cadastrado. Deseja cadastrar uma conta? ");
+            if (confirma) { navigate('/signup') }
+        };
 
-        if(userExist && !passwordMatch) {
+        if (userExist && !passwordMatch) {
             alert('Senha incorreta!');
             return
-        }        
+        }
         setId(userExist!.id)
-        dispatch(getUserById(userExist!.id))        
+        dispatch(getUserById(userExist!.id))
         setTimeout(() => {
-        navigate('/home')
-    }, 2500)
+            navigate('/home')
+        }, 2500)
     };
 
     const clearInputs = () => {
@@ -169,30 +170,30 @@ function Form({ mode }: FormProps) {
     };
 
     return (
-        <>        
-            <Stack spacing={2} sx={{ minWidth: 355 }} >                 
-                { mode === 'signup' && (
-                    <>  
+        <>
+            <Stack spacing={2} sx={{ minWidth: 355 }} >
+                {mode === 'signup' && (
+                    <>
                         <h1>SIGN UP</h1>
-                        <InputDefault type='text' label='Nome' name='name' value={name} handleChange={mudarInput} color={errorName ? 'error' : 'primary'}/>
-                        <InputDefault type='email' label='E-mail' name='email' value={email}  handleChange={mudarInput} color={errorEmail ? 'error' : 'primary'}/>
-                        <InputDefault type='password' label='Senha' name='password' value={password}  handleChange={mudarInput} color={errorPassword ? 'error' : 'primary'}/>
-                        <InputDefault type='password' label='Repita a Senha' name='repassword' value={repassword} handleChange={mudarInput} color={errorPassword ? 'error' : 'primary'}/>
+                        <InputDefault type='text' label='Nome' name='name' value={name} handleChange={mudarInput} color={errorName ? 'error' : 'primary'} />
+                        <InputDefault type='email' label='E-mail' name='email' value={email} handleChange={mudarInput} color={errorEmail ? 'error' : 'primary'} />
+                        <InputDefault type='password' label='Senha' name='password' value={password} handleChange={mudarInput} color={errorPassword ? 'error' : 'primary'} />
+                        <InputDefault type='password' label='Repita a Senha' name='repassword' value={repassword} handleChange={mudarInput} color={errorPassword ? 'error' : 'primary'} />
                         <Button disabled={errorName || errorEmail || errorPassword} variant='contained' color='secondary' onClick={createAccount}>Criar Conta</Button>
                     </>
                 )}
-                { mode === 'login' && (
+                {mode === 'login' && (
                     <>
                         <h1>ACESSAR</h1>
-                        <InputDefault type='email' label='E-mail' name='email' value={email} handleChange={mudarInput} color={errorEmail ? 'error' : 'primary'}/>
-                        <InputDefault type='password' label='Senha' name='password'  value={password} handleChange={mudarInput} color={errorPassword ? 'error' : 'primary'}/>
+                        <InputDefault type='email' label='E-mail' name='email' value={email} handleChange={mudarInput} color={errorEmail ? 'error' : 'primary'} />
+                        <InputDefault type='password' label='Senha' name='password' value={password} handleChange={mudarInput} color={errorPassword ? 'error' : 'primary'} />
                         <Button disabled={errorEmail || errorPassword} variant='contained' color='secondary' onClick={login}>Acessar</Button>
                     </>
-                )}   
+                )}
             </Stack>
             <Box marginTop={3}>
-                { mode === 'login' && ( <Typography color='secondary' variant='subtitle2'>Não tem conta? <Typography variant='button' color='primary' sx={{cursor: 'pointer'}} onClick={handleNavigate}>Cadastre-se</Typography></Typography> )}
-                { mode === 'signup' && ( <Typography color='secondary' variant='subtitle2'>Já tem conta? <Typography variant='button' color='primary' sx={{cursor: 'pointer'}} onClick={handleNavigate}>Fazer Login</Typography></Typography> )}
+                {mode === 'login' && (<Typography color='secondary' variant='subtitle2'>Não tem conta? <Typography variant='button' color='primary' sx={{ cursor: 'pointer' }} onClick={handleNavigate}>Cadastre-se</Typography></Typography>)}
+                {mode === 'signup' && (<Typography color='secondary' variant='subtitle2'>Já tem conta? <Typography variant='button' color='primary' sx={{ cursor: 'pointer' }} onClick={handleNavigate}>Fazer Login</Typography></Typography>)}
             </Box>
         </>
     )

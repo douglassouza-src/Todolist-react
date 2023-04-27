@@ -1,7 +1,7 @@
-import { combineReducers } from 'redux';
-import { recadosReducer } from './recados/recadoSlice';
-import {userLoggedReducer} from './userLogged/userLoggedSlice';
-import { usersReducer } from './users/userSlice';
+import { combineReducers } from "redux";
+import { recadosReducer } from "./recados/recadoSlice";
+import { userLoggedReducer } from "./userLogged/userLoggedSlice";
+import { usersReducer } from "./users/userSlice";
 
 const rootReducer = combineReducers({
   users: usersReducer,

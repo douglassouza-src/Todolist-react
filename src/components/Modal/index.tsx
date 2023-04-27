@@ -1,5 +1,5 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField } from '@mui/material';
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { buscarRecadosId, deleteRecado, getRecadosArquivados, getRecadosUser, updateRecado } from '../../store/modules/recados/recadoSlice';
 import { RecadoData } from '../../store/modules/typeStore';
@@ -15,21 +15,21 @@ interface ModalProps {
     mode: ModalMode;
 }
 
-export function ModalAttDel({ open, handleClose, id, mode}: ModalProps) {
+export function ModalAttDel({ open, handleClose, id, mode }: ModalProps) {
     const [description, setDescription] = useState('');
     const [detail, setDetail] = useState('');
-            
+
     const recado = useAppSelector((state) => buscarRecadosId(state, id));
     const dispatch = useAppDispatch();
 
     const userLoggeID = () => {
         return JSON.parse(localStorage.getItem('userLoggedId') || "")
-      }
+    }
 
     const userID = userLoggeID()
 
     useEffect(() => {
-        if(recado){
+        if (recado) {
             setDescription(recado.description);
             setDetail(recado.detail);
         }
@@ -37,7 +37,7 @@ export function ModalAttDel({ open, handleClose, id, mode}: ModalProps) {
 
     const handleConfirm = () => {
 
-        if(mode === 'deletarRecado'){
+        if (mode === 'deletarRecado') {
             const infoRecado: RecadoData = {
                 idUser: userID,
                 idRecado: recado!.id,
@@ -48,11 +48,11 @@ export function ModalAttDel({ open, handleClose, id, mode}: ModalProps) {
             dispatch(deleteRecado(infoRecado));
         }
 
-        if(mode === 'editarRecado'){
-            
-            if(description === '' || detail === ''){
+        if (mode === 'editarRecado') {
+
+            if (description === '' || detail === '') {
                 alert('Campos vazios não são permitidos')
-                return 
+                return
             }
 
             const infoRecado: RecadoData = {
@@ -65,7 +65,7 @@ export function ModalAttDel({ open, handleClose, id, mode}: ModalProps) {
             dispatch(updateRecado(infoRecado))
         }
 
-        if(mode === 'arquivarRecado'){
+        if (mode === 'arquivarRecado') {
             const infoRecado: RecadoData = {
                 idUser: userID,
                 idRecado: recado!.id,
@@ -73,37 +73,37 @@ export function ModalAttDel({ open, handleClose, id, mode}: ModalProps) {
                 detail: recado!.detail,
                 check: true,
             }
-            dispatch(updateRecado(infoRecado)) 
-            .then(()=> {                
-                dispatch(getRecadosUser(userID))
-            })
-        }        
+            dispatch(updateRecado(infoRecado))
+                .then(() => {
+                    dispatch(getRecadosUser(userID))
+                })
+        }
 
-        if(mode === 'desarquivarRecado'){
+        if (mode === 'desarquivarRecado') {
             const infoRecado: RecadoData = {
                 idUser: userID,
                 idRecado: recado!.id,
                 description: recado!.description,
                 detail: recado!.detail,
                 check: false,
-            } 
-                dispatch(updateRecado(infoRecado))
-                .then(()=> {                
+            }
+            dispatch(updateRecado(infoRecado))
+                .then(() => {
                     dispatch(getRecadosArquivados(userID))
                 })
-            
+
         }
-        
+
         handleClose();
     }
 
 
     return (
         <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
         >
             {mode === 'deletarRecado' && (
                 <React.Fragment>
@@ -113,9 +113,9 @@ export function ModalAttDel({ open, handleClose, id, mode}: ModalProps) {
 
                     <DialogContent>
                         <DialogContentText id="alert-dialog-description">
-                        Ao confirmar esta ação não poderá ser desfeita.
+                            Ao confirmar esta ação não poderá ser desfeita.
                         </DialogContentText>
-            </DialogContent>
+                    </DialogContent>
                 </React.Fragment>
             )}
 
@@ -127,9 +127,9 @@ export function ModalAttDel({ open, handleClose, id, mode}: ModalProps) {
 
                     <DialogContent>
                         <DialogContentText id="alert-dialog-description">
-                        
+
                         </DialogContentText>
-            </DialogContent>
+                    </DialogContent>
                 </React.Fragment>
             )}
 
@@ -141,29 +141,29 @@ export function ModalAttDel({ open, handleClose, id, mode}: ModalProps) {
 
                     <DialogContent>
                         <DialogContentText id="alert-dialog-description">
-                        
+
                         </DialogContentText>
-            </DialogContent>
+                    </DialogContent>
                 </React.Fragment>
             )}
 
 
             {mode === 'editarRecado' && (
                 <React.Fragment>
-                <DialogTitle id="alert-dialog-title">
-                    {`EDITAR RECADO`}
-                </DialogTitle>
+                    <DialogTitle id="alert-dialog-title">
+                        {`EDITAR RECADO`}
+                    </DialogTitle>
 
-                <DialogContent>
-                    <DialogContentText id="alert-dialog-description">
-                    </DialogContentText>
-                    <>
-                        <TextField value={description} name='description' fullWidth sx={{marginTop:"10px"}}label='Descrição' onChange={(ev) => setDescription(ev.target.value)}/>
-                        <TextField value={detail} name='detail' label='Detalhamento' fullWidth sx={{marginTop:"10px"}} onChange={(ev) => setDetail(ev.target.value)} />
-                    
-                    </>
-                </DialogContent>
-            </React.Fragment>
+                    <DialogContent>
+                        <DialogContentText id="alert-dialog-description">
+                        </DialogContentText>
+                        <>
+                            <TextField value={description} name='description' fullWidth sx={{ marginTop: "10px" }} label='Descrição' onChange={(ev) => setDescription(ev.target.value)} />
+                            <TextField value={detail} name='detail' label='Detalhamento' fullWidth sx={{ marginTop: "10px" }} onChange={(ev) => setDetail(ev.target.value)} />
+
+                        </>
+                    </DialogContent>
+                </React.Fragment>
             )}
 
             <DialogActions>

@@ -2,25 +2,25 @@ export interface Recado {
   id: string;
   description: string;
   detail: string;
-  check: boolean
+  check: boolean;
 }
 
 export interface RecadoData {
-  idUser: string,
-  idRecado?:string
+  idUser: string;
+  idRecado?: string;
   description: string;
   detail: string;
-  check: boolean
+  check: boolean;
 }
 
 export interface KeyData {
-  idUser: string,
-  key: string
+  idUser: string;
+  key: string;
 }
 
 export interface ArquivadosData {
-  idUser: string,
-  key: boolean
+  idUser: string;
+  key: boolean;
 }
 
 export interface User {
@@ -37,5 +37,4 @@ export interface ResponseAPI {
   data: any;
 }
 
-export type newUserRequest = Omit<User, 'id' | 'recados'>
-
+export type newUserRequest = Omit<User, "id" | "recados">;

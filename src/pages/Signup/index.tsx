@@ -1,14 +1,15 @@
 import React from 'react';
 import { ContainerForm } from '../../components/ContainerForm';
 import { Form } from '../../components/Form';
-import { WrapperContent } from '../../components/WrapperContent';
+import { GlobalStyle } from '../../config';
 
 export function Signup() {
     return (
-        <WrapperContent >
+        <>
+        <GlobalStyle />
             <ContainerForm >
-                <Form mode='signup'/>
+                <Form mode='signup' />
             </ContainerForm>
-        </WrapperContent>
+        </>
     )
 };
