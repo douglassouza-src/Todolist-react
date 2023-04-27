@@ -1,14 +1,13 @@
 import styled from 'styled-components';
 
 const ContainerForm = styled.section`
-    width: 30%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: black;
-    border: 20px solid black;
+    background-color: #0a0f18;
     input {
         color: white;
     }

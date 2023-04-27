@@ -4,21 +4,20 @@ const GlobalStyle = createGlobalStyle`
     * {
         margin: 0;
         padding: 0;
-        box-sizing: border-box;
+        box-sizing: border-box;  
     }
     html {
         font-family: 'Roboto', sans-serif;
     }
     body {
-        width: 100vw;
-        height: 100vh;
-        background: radial-gradient(circle, #b4b4b4 0%, #4b4b4b 100%);
-        color: #ffffff;
+        width: 100%;
+        height: 100%;
+        background: #0a0f18;
+        color: #fbfbfb;
     }
-    h1 {
+    .h1 {
         margin-bottom: 0.5em;
         font-size: 40px;
-        color:#f6f6f6;
     }
 `
 export { GlobalStyle }

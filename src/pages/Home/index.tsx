@@ -119,64 +119,60 @@ function Home(){
     
   return (
     <Box minWidth={450} width="100%" height="100%" overflow="hidden">
+
       <Grid m={5}>
         <Grid mb={5} mr={-1} display={'flex'} justifyContent={'right'} alignItems={'center'} >
           <Button onClick={logOut} variant='contained' color='error'><ExitToAppIcon />| Sair</Button></Grid>
 
-        <Grid display={'flex'} minWidth={430} maxWidth={800} margin={'auto'} style={{  backgroundColor: 'GrayText' }} >
+        <Grid display={'flex'} minWidth={430} maxWidth={800} margin={'auto'}>
           <InputDefault type='text' label='Descrição' name='description' value={description} color='primary' handleChange={mudarInput} />
           <InputDefault type='text' label='Detalhamento' name='detail' value={detail} color='primary' handleChange={mudarInput} />
           <Button variant='contained' color='primary' size='large' onClick={salvarRecado}>Salvar</Button>
         </Grid >
       </Grid>
 
-      <Grid maxWidth={400} display={'flex'} margin={'auto'} style={{ backgroundColor: 'GrayText' }}>
+      <Grid maxWidth={400} display={'flex'} margin={'auto'} style={{ backgroundColor: '#131313b4' }}>
         <InputDefault type='text' label='Pesquisar' name='key' value={keyBusca} color='primary' handleChange={mudarInput} />
-        {mode === ('normal') && (
-          <Button variant='contained' color='primary' size='large' onClick={buscarKey}>Buscar</Button>)}
-        {mode === ('arquivado') && (
-          <Button variant='contained' color='primary' size='large' onClick={buscarKey}>Buscar</Button>)}
-        {mode === ('filtro') && (
-          <Button variant='contained' color='primary' size='large' onClick={buscarKey}>Voltar</Button>)}
+        {mode === ('normal') && (<Button variant='contained' color='primary' size='large' onClick={buscarKey}>Buscar</Button>)}
+        {mode === ('arquivado') && (<Button variant='contained' color='primary' size='large' onClick={buscarKey}>Buscar</Button>)}
+        {mode === ('filtro') && (<Button variant='contained' color='primary' size='large' onClick={buscarKey}>Voltar</Button>)}
       </Grid>
 
-
-
-      <Grid maxWidth={1200} minWidth={425} margin={'auto'} mt={8}>
-        <Grid display={'flex'} maxHeight={30} >
-          {mode === 'normal' && (<Button variant='contained' color='primary' size='large' onClick={buscarArquivados}>Exibir Favoritos</Button>)}
-          {mode === 'arquivado' && (<Button variant='contained' color='primary' size='large' onClick={buscarRecadosNormais}>Exibir Todos</Button>)}
+      <Grid maxWidth={1200} minWidth={425} margin={'auto'} mt={10}>
+        <Grid display={'flex'} maxHeight={30} justifyContent={'right'} mr={1} >
+          {mode === 'normal' && (<Button variant='contained' color='primary' size='large'  style={{ borderTop: '5px black solid', borderRight: '5px black solid', backgroundColor:'#05102873', color: 'white' }}  onClick={buscarArquivados}>Exibir Favoritos</Button>)}
+          {mode === 'arquivado' && (<Button variant='contained' color='primary' size='large' style={{ borderTop: '5px black solid', borderRight: '5px black solid', backgroundColor:'#05102873', color: 'white' }} onClick={buscarRecadosNormais}>Exibir Todos</Button>)}
         </Grid>
 
         <TableContainer component={Paper}>
-          <Table>
+          <Table style={{overflow:"hidden"}}>
             <TableHead>
               <TableRow style={{ border: '3px black solid' }} >
-                <TableCell align="center" style={{ background: 'black', fontSize: 15, color: 'whitesmoke', borderRight: '1px white solid' }}>ID</TableCell>
-                <TableCell align="center" style={{ background: 'black', fontSize: 15, color: 'whitesmoke', borderRight: '1px white solid' }}>Descrição</TableCell>
-                <TableCell align="center" style={{ background: 'black', fontSize: 15, color: 'whitesmoke', borderRight: '1px white solid' }}>Detalhamento</TableCell>
-                <TableCell align="center" style={{ background: 'black', fontSize: 15, color: 'whitesmoke' }}>Ações</TableCell>
+                <TableCell align="center" style={{ background: '#050c1cf1', fontSize: 15, color: 'whitesmoke', borderRight: '1px white solid', maxWidth:'10px' }}>ID</TableCell>
+                <TableCell align="center" style={{ background: '#050c1cf1', fontSize: 15, color: 'whitesmoke', borderRight: '1px white solid' }}>Descrição</TableCell>
+                <TableCell align="center" style={{ background: '#050c1cf1', fontSize: 15, color: 'whitesmoke', borderRight: '1px white solid' }}>Detalhamento</TableCell>
+                <TableCell align="center" style={{ background: '#050c1cf1', fontSize: 15, color: 'whitesmoke' }}>Ações</TableCell>
               </TableRow>
             </TableHead>
-            <TableBody>
+
+            <TableBody style={{ border: '3px black solid' }}>
               {recadosRedux.map((row: any, index: any) =>
                 <TableRow component="th" scope="row" key={row.id}>
-                  <TableCell align="center" style={{ fontSize: 15 }} >{index + 1}</TableCell>
-                  <TableCell align="center" style={{ fontSize: 17 }} >{row.description}</TableCell>
-                  <TableCell align="center" style={{ fontSize: 17 }} >{row.detail}</TableCell>
+                  <TableCell align="center" style={{ background: '#0a0f18', fontSize: 17, color: 'white' }} >{index + 1}</TableCell>
+                  <TableCell align="center" style={{ background: '#0a0f18', fontSize: 17, color: 'white' }} >{row.description}</TableCell>
+                  <TableCell align="center" style={{ background: '#0a0f18', fontSize: 17, color: 'white' }} >{row.detail}</TableCell>
 
-                  <TableCell align="center">
+                  <TableCell align="center" style={{ background: '#08142ff0', maxWidth:'90px', padding:'0', border: '2px black solid' }}>
                     {mode === 'normal' && <Tooltip title="Editar" onClick={() => editMessage(row.id)}><IconButton><EditIcon /></IconButton></Tooltip>}
                     <Tooltip title="Deletar" onClick={() => deleteMessage(row.id)}><IconButton><DeleteForeverOutlinedIcon /></IconButton></Tooltip>
                     {mode === 'normal' && (
-                      <Tooltip title="Arquivar" onClick={() => arquivarMessage(row.id)}><IconButton><GradeIcon /></IconButton></Tooltip>)}
+                    <Tooltip title="Arquivar" onClick={() => arquivarMessage(row.id)}><IconButton><GradeIcon /></IconButton></Tooltip>)}
                     {mode === 'arquivado' && (
-                      <Tooltip title="Desarquivar" onClick={() => desarquivarMessage(row.id)}><IconButton><StarBorderIcon /></IconButton></Tooltip>)}
+                    <Tooltip title="Desarquivar" onClick={() => desarquivarMessage(row.id)}><IconButton><StarBorderIcon /></IconButton></Tooltip>)}
                   </TableCell>
-
-                </TableRow>
-              )}
+                </TableRow>)}
             </TableBody>
+            
           </Table>
         </TableContainer>
       </Grid>

@@ -14,7 +14,7 @@ export type InputName = 'name' | 'email' | 'password' | 'repassword' | 'descript
 
 export function InputDefault({ type, name, label, value, color, handleChange }: InputDefaultProps) {
     return (
-        <TextField color={color} focused fullWidth name={name} label={label} variant="outlined" type={type} value={value} onChange={(ev) => handleChange(ev.target.value, name)}/>
+        <TextField InputProps={{ style: { color: 'white'} }} color={color} focused fullWidth name={name} label={label} variant="outlined" type={type} value={value} onChange={(ev) => handleChange(ev.target.value, name)}/>
     )
 }
 

@@ -170,7 +170,7 @@ function Form({ mode }: FormProps) {
 
     return (
         <>        
-            <Stack direction="column" spacing={2} sx={{width: '80%'}}>                 
+            <Stack spacing={2} sx={{ minWidth: 355 }} >                 
                 { mode === 'signup' && (
                     <>  
                         <h1>SIGN UP</h1>
